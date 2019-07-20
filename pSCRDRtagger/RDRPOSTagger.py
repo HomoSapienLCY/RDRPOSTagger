@@ -12,6 +12,9 @@ from Utility.Config import NUMBER_OF_PROCESSES, THRESHOLD
 from Utility.Utils import getWordTag, getRawText, readDictionary
 from Utility.LexiconCreator import createLexicon
 
+# get the current file path
+current_python_file_dir = os.path.dirname(os.path.realpath(__file__))
+
 
 def unwrap_self_RDRPOSTagger(arg, **kwarg):
     return RDRPOSTagger.tagRawSentence(*arg, **kwarg)
@@ -28,8 +31,10 @@ class RDRPOSTagger(SCRDRTree):
 
     def englishSetup(self):
         # initialize self with english setup (DICT and tree)
-        self.constructSCRDRtreeFromRDRfile("Models/POS/English.RDR")
-        self.DICT = readDictionary("Models/POS/English.DICT")
+        self.constructSCRDRtreeFromRDRfile(
+            current_python_file_dir + "/Models/POS/English.RDR")
+        self.DICT = readDictionary(
+            current_python_file_dir + "/Models/POS/English.DICT")
 
     def tagRawSentence(self, DICT, rawLine):
         # set DICT to "self"to use a preloaded dictionary
